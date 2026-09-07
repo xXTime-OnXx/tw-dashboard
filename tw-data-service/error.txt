@@ -1,0 +1,337 @@
+61293-2026-08-20 13:17:23.820  WARN 1 --- [XNIO-1 task-53] c.r.a.web.rest.TourdataWebResource       : [Tourdata REST] POST /api/tourdata/drive-jobs documentId=3340965 eventId=3342001 documentTourdataId=null
+61294-2026-08-20 13:17:23.849  WARN 1 --- [XNIO-1 task-53] c.r.a.s.tourdata.TourdataRealWebService  : [Tourdata] createDriveJob request POST DriveOrder driveJobId=null documentId=3340965 type=TRAVEL_CONFIRMATION dtoBookingId=null persistedBookingId=null existingTourdataDriveId=null willCreateBooking=true
+61295-2026-08-20 13:17:23.850  WARN 1 --- [XNIO-1 task-53] c.r.a.s.tourdata.TourdataRealWebService  : [Tourdata] createBooking request POST /Order documentId=3340965 type=TRAVEL_CONFIRMATION dtoTourdataId=null persistedTourdataId=null
+61296:2026-08-20 13:17:23.958 ERROR 1 --- [XNIO-1 task-53] c.r.a.s.tourdata.TourdataRealWebService  : Tourdata error - 422 Unprocessable Entity. Body: ch.rohrerrevolution.advatra.service.tourdata.dto.TourdataOrderBookingDTO@6b07883a
+
+
+2026-08-20 14:33:13.487 DEBUG 1 --- [  XNIO-1 task-1] c.r.a.web.rest.CustomerLocationResource  : REST request to save CustomerLocation : CustomerLocation{id=null, number=null, country='CHE', state='Luzern', zipCode='6005', city='Luzern', street='Villenstrasse 14',  addressAddition='null', discount=null, tourdataId=null}
+
+2026-08-20 14:33:13.509 DEBUG 1 --- [  XNIO-1 task-1] c.r.a.service.CustomerLocationService    : Request to save CustomerLocation : CustomerLocation{id=null, number=null, country='CHE', state='Luzern', zipCode='6005', city='Luzern', street='Villenstrasse 14',  addressAddition='null', discount=null, tourdataId=null}
+
+2026-08-20 14:33:13.573 DEBUG 1 --- [  XNIO-1 task-1] jdk.event.security                       : ValidationChain: -1824562466, -405937123, 2097347659
+
+2026-08-20 14:33:13.621 DEBUG 1 --- [  XNIO-1 task-1] jdk.event.security                       :  TLSHandshake: connect-dev.simplit.dev:443, TLSv1.2, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, 2097347659
+
+2026-08-20 14:35:13.636 ERROR 1 --- [  XNIO-1 task-1] o.z.problem.spring.common.AdviceTraits   : Internal Server Error
+
+java.lang.NullPointerException: null
+
+	at ch.rohrerrevolution.advatra.service.AlbatrossService.createOrUpdateKunde(AlbatrossService.java:39)
+
+	at ch.rohrerrevolution.advatra.service.AlbatrossService$$FastClassBySpringCGLIB$$f62d06c8.invoke(<generated>)
+
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:783)
+
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753)
+
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753)
+
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:698)
+
+	at ch.rohrerrevolution.advatra.service.AlbatrossService$$EnhancerBySpringCGLIB$$e9777742.createOrUpdateKunde(<generated>)
+
+	at ch.rohrerrevolution.advatra.service.CustomerLocationService.save(CustomerLocationService.java:81)
+
+	at ch.rohrerrevolution.advatra.service.CustomerLocationService.save(CustomerLocationService.java:64)
+
+	at ch.rohrerrevolution.advatra.service.CustomerLocationService$$FastClassBySpringCGLIB$$fce0f9c8.invoke(<generated>)
+
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:783)
+
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753)
+
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753)
+
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:698)
+
+	at ch.rohrerrevolution.advatra.service.CustomerLocationService$$EnhancerBySpringCGLIB$$e8233042.save(<generated>)
+
+	at ch.rohrerrevolution.advatra.web.rest.CustomerLocationResource.createCustomerLocation(CustomerLocationResource.java:60)
+
+	at ch.rohrerrevolution.advatra.web.rest.CustomerLocationResource$$FastClassBySpringCGLIB$$a50bafa0.invoke(<generated>)
+
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:783)
+
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753)
+
+	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:61)
+
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:753)
+
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:698)
+
+	at ch.rohrerrevolution.advatra.web.rest.CustomerLocationResource$$EnhancerBySpringCGLIB$$298fb807.createCustomerLocation(<generated>)
+
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:517)
+
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:584)
+
+	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:129)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at io.sentry.spring.SentryUserFilter.doFilterInternal(SentryUserFilter.java:56)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327)
+
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:121)
+
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:115)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:105)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:149)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at ch.rohrerrevolution.advatra.security.jwt.JWTFilter.doFilter(JWTFilter.java:38)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110)
+
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at io.sentry.spring.SentrySpringFilter.doFilterInternal(SentrySpringFilter.java:57)
+
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+
+	at io.undertow.servlet.handlers.FilterHandler.handleRequest(FilterHandler.java:84)
+
+	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+
+	at io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+
+	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+
+	at io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+
+	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:117)
+
+	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+
+	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+
+	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+
+	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+
+	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+
+	at io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+
+	at io.undertow.servlet.handlers.SendErrorPageHandler.handleRequest(SendErrorPageHandler.java:52)
+
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:275)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:79)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:134)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:131)
+
+	at io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+
+	at io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:255)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:79)
+
+	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:100)
+
+	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:387)
+
+	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:852)
+
+	at org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+
+	at org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:2019)
+
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1558)
+
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1449)
+
+	at org.xnio.XnioWorker$WorkerThreadFactory$1$1.run(XnioWorker.java:1280)
+
+	at java.base/java.lang.Thread.run(Unknown Source)
