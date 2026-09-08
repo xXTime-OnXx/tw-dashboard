@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tw-data-service"
+version = "0.1.0"
+description = "Reliable public-data ingestion for Tribal Wars worlds"
+requires-python = ">=3.11"
+dependencies = [
+  "boto3>=1.35,<2",
+  "requests>=2.32,<3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+tw-data = "tw_data.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
