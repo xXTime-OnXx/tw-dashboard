@@ -21,7 +21,7 @@ class FakeS3Client:
             raise missing_key_error("HeadObject")
         return {}
 
-    def put_object(self, *, Bucket, Key, Body, ContentType):
+    def put_object(self, *, Bucket, Key, Body, ContentType, **kwargs):
         self.objects[Key] = Body
 
 
@@ -65,3 +65,52 @@ def test_write_events_is_idempotent():
     event_keys = [key for key in client.objects if key.startswith("events/")]
     assert len(event_keys) == 1
     assert json.loads(client.objects[event_keys[0]]) == event.to_dict()
+
+
+def test_snapshot_and_latest_manifest_are_written():
+    from datetime import datetime, timezone
+
+    from tw_data.snapshots import Snapshot
+
+    client = FakeS3Client()
+    storage = storage_with(client)
+    captured_at = datetime(2026, 9, 8, 12, 17, tzinfo=timezone.utc)
+    snapshot = Snapshot.create(
+        "players",
+        "https://de259.die-staemme.de/map/player.txt.gz",
+        "text/csv",
+        b"1,Player,0,1,100,1\n",
+    )
+
+    stored = storage.write_snapshot("de259", captured_at, snapshot)
+    storage.write_snapshot_manifest("de259", captured_at, [stored])
+
+    assert stored.key == (
+        "snapshots/de259/players/date=2026-09-08/hour=12/"
+        "20260908T121700Z.gz"
+    )
+    manifest = json.loads(client.objects["state/de259/snapshots/latest.json"])
+    assert manifest["world"] == "de259"
+    assert manifest["snapshots"][0]["key"] == stored.key
+
+
+def test_world_config_uses_separate_latest_manifest():
+    from datetime import datetime, timezone
+
+    from tw_data.snapshots import Snapshot
+
+    client = FakeS3Client()
+    storage = storage_with(client)
+    captured_at = datetime(2026, 9, 8, 12, 17, tzinfo=timezone.utc)
+    snapshot = Snapshot.create(
+        "world-config",
+        "https://de259.die-staemme.de/interface.php?func=get_config",
+        "application/xml",
+        b"<config />",
+    )
+
+    stored = storage.write_snapshot("de259", captured_at, snapshot)
+    storage.write_world_config_manifest("de259", captured_at, [stored])
+
+    assert "state/de259/world-config/latest.json" in client.objects
+    assert "state/de259/snapshots/latest.json" not in client.objects

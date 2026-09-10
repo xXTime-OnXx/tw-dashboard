@@ -9,6 +9,7 @@ import boto3
 from botocore.exceptions import ClientError
 
 from .conquests import Conquest
+from .snapshots import Snapshot, StoredSnapshot
 
 
 @dataclass(frozen=True, slots=True)
@@ -80,6 +81,66 @@ class R2Storage:
             Bucket=self.bucket,
             Key=f"state/{world}/conquest-cursor.json",
             Body=json.dumps(asdict(cursor), separators=(",", ":")).encode(),
+            ContentType="application/json",
+        )
+
+    def write_snapshot(
+        self, world: str, captured_at: datetime, snapshot: Snapshot
+    ) -> StoredSnapshot:
+        key = (
+            f"snapshots/{world}/{snapshot.name}/"
+            f"date={captured_at:%Y-%m-%d}/hour={captured_at:%H}/"
+            f"{captured_at:%Y%m%dT%H%M%SZ}.gz"
+        )
+        self.client.put_object(
+            Bucket=self.bucket,
+            Key=key,
+            Body=snapshot.body,
+            ContentType=snapshot.content_type,
+            ContentEncoding="gzip",
+        )
+        return StoredSnapshot(
+            name=snapshot.name,
+            key=key,
+            source_url=snapshot.source_url,
+            content_type=snapshot.content_type,
+            size_bytes=len(snapshot.body),
+            sha256=snapshot.sha256,
+        )
+
+    def write_snapshot_manifest(
+        self,
+        world: str,
+        captured_at: datetime,
+        snapshots: Iterable[StoredSnapshot],
+    ) -> None:
+        payload = {
+            "world": world,
+            "captured_at": captured_at.isoformat(),
+            "snapshots": [snapshot.to_dict() for snapshot in snapshots],
+        }
+        self.client.put_object(
+            Bucket=self.bucket,
+            Key=f"state/{world}/snapshots/latest.json",
+            Body=json.dumps(payload, separators=(",", ":")).encode(),
+            ContentType="application/json",
+        )
+
+    def write_world_config_manifest(
+        self,
+        world: str,
+        captured_at: datetime,
+        snapshots: Iterable[StoredSnapshot],
+    ) -> None:
+        payload = {
+            "world": world,
+            "captured_at": captured_at.isoformat(),
+            "snapshots": [snapshot.to_dict() for snapshot in snapshots],
+        }
+        self.client.put_object(
+            Bucket=self.bucket,
+            Key=f"state/{world}/world-config/latest.json",
+            Body=json.dumps(payload, separators=(",", ":")).encode(),
             ContentType="application/json",
         )
 
