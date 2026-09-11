@@ -39,6 +39,7 @@ def collect_conquests(world: str) -> None:
 
     # Advance to observation time, not merely the newest event. This prevents an
     # empty interval from being fetched forever; overlap protects the boundary.
+    storage.write_conquest_check(world, since, now, len(events))
     storage.write_cursor(world, now)
     print(f"world={world} fetched={len(events)} written={written} cursor={now}")
 

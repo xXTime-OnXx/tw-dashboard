@@ -1,0 +1,33 @@
+{
+  "name": "@tw/dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@tanstack/react-query": "5.102.8",
+    "@tanstack/react-router": "1.170.34",
+    "@tanstack/react-table": "8.21.3",
+    "recharts": "3.10.1",
+    "@deck.gl/core": "9.4.0",
+    "@deck.gl/layers": "9.4.0",
+    "@deck.gl/react": "9.4.0",
+    "lucide-react": "1.44.0",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "tailwind-merge": "3.6.0",
+    "@deck.gl/widgets": "9.4.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "@tailwindcss/vite": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "wrangler": "4.131.0"
+  }
+}

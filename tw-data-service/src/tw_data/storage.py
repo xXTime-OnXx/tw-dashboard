@@ -72,6 +72,21 @@ class R2Storage:
             written += 1
         return written
 
+    def write_conquest_check(self, world: str, since: int, until: int, event_count: int) -> None:
+        """Persist successful query coverage after all returned events are durable."""
+        moment = datetime.fromtimestamp(until, timezone.utc)
+        key = (
+            f"state/{world}/conquest-checks/date={moment:%Y-%m-%d}/"
+            f"{until}.json"
+        )
+        payload = {"world": world, "queried_from": since, "queried_until": until,
+                   "event_count": event_count}
+        self.client.put_object(
+            Bucket=self.bucket, Key=key,
+            Body=json.dumps(payload, separators=(",", ":")).encode(),
+            ContentType="application/json",
+        )
+
     def write_cursor(self, world: str, last_occurred_at: int) -> None:
         cursor = Cursor(
             last_occurred_at=last_occurred_at,

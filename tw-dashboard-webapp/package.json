@@ -1,0 +1,47 @@
+{
+  "name": "tw-dashboard",
+  "private": true,
+  "packageManager": "pnpm@10.26.2",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @tw/dashboard dev",
+    "build": "pnpm --filter @tw/dashboard build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --env-file-if-exists=.env.test.local ./node_modules/vitest/vitest.mjs run",
+    "test:integration": "node --env-file-if-exists=.env.test.local ./node_modules/vitest/vitest.mjs run tests/integration.test.ts",
+    "test:e2e": "node --env-file-if-exists=.env.test.local ./node_modules/@playwright/test/cli.js test",
+    "db:migrate": "tsx packages/db/src/migrate.ts",
+    "db:seed": "node --env-file-if-exists=.env.test.local --import=tsx scripts/seed.ts",
+    "deploy:configure": "tsx scripts/configure-deployment.ts",
+    "format:check": "prettier --check apps packages scripts tests *.ts *.json *.yaml docs/*.md AGENTS.md README.md",
+    "audit:archive": "tsx apps/importer/src/audit.ts",
+    "data:import": "tsx apps/importer/src/cli.ts",
+    "benchmark": "tsx scripts/benchmark.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.18.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "drizzle-kit": "0.31.10",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13",
+    "typescript": "5.9.2",
+    "vitest": "5.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1129.0",
+    "@neon/config": "1.3.2",
+    "@neon/env": "1.2.3",
+    "csv-parse": "7.0.2",
+    "drizzle-orm": "0.45.2",
+    "fast-xml-parser": "5.11.1",
+    "hono": "4.13.7",
+    "jose": "6.2.12",
+    "postgres": "3.4.9",
+    "zod": "4.6.1"
+  },
+  "type": "module"
+}

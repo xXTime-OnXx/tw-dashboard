@@ -1,0 +1,52 @@
+name: Dashboard checks
+on:
+  pull_request:
+    paths:
+      - "tw-dashboard-webapp/**"
+      - ".github/workflows/dashboard-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tw-dashboard-webapp/**"
+      - ".github/workflows/dashboard-ci.yml"
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tw-dashboard-webapp
+    services:
+      postgres:
+        image: postgres:17.6
+        env:
+          POSTGRES_USER: tw
+          POSTGRES_PASSWORD: tw
+          POSTGRES_DB: tw_dashboard_test
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgres://tw:tw@localhost:5432/tw_dashboard_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: tw-dashboard-webapp/.node-version
+          cache: pnpm
+          cache-dependency-path: tw-dashboard-webapp/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm db:seed
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-test-results
+          path: tw-dashboard-webapp/test-results/

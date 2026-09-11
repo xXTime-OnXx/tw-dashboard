@@ -1,0 +1,79 @@
+name: Import collected data
+on:
+  workflow_run:
+    workflows:
+      [
+        Collect W259 hourly snapshots,
+        Collect W259 conquests,
+        Collect world configuration,
+      ]
+    types: [completed]
+  schedule:
+    - cron: "41 3 * * *"
+  workflow_dispatch:
+    inputs:
+      world:
+        default: de259
+        type: string
+      mode:
+        type: choice
+        options: [incremental, reconcile, backfill, summaries]
+        default: incremental
+      from:
+        description: Backfill start YYYY-MM-DD
+        type: string
+      to:
+        description: Backfill end YYYY-MM-DD
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: import-${{ inputs.world || 'de259' }}
+  cancel-in-progress: false
+jobs:
+  import:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == github.event.repository.default_branch &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: production-data
+    defaults:
+      run:
+        working-directory: tw-dashboard-webapp
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: tw-dashboard-webapp/.node-version
+          cache: pnpm
+          cache-dependency-path: tw-dashboard-webapp/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Import or reconcile
+        env:
+          DATABASE_URL: ${{ secrets.IMPORT_DATABASE_URL }}
+          R2_ENDPOINT_URL: ${{ secrets.R2_ENDPOINT_URL }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          IMPORT_WORLD: ${{ inputs.world || 'de259' }}
+          IMPORT_MODE: ${{ inputs.mode || 'incremental' }}
+          IMPORT_FROM: ${{ inputs.from }}
+          IMPORT_TO: ${{ inputs.to }}
+          TRIGGER: ${{ github.event_name }}
+        run: |
+          args=(--world "$IMPORT_WORLD" --mode "$IMPORT_MODE")
+          if [ "$TRIGGER" = schedule ]; then
+            args=(--world "$IMPORT_WORLD" --mode reconcile)
+            if [ "$(date -u +%u)" = 7 ]; then args+=(--full); fi
+          fi
+          if [ -n "$IMPORT_FROM" ]; then args+=(--from "$IMPORT_FROM"); fi
+          if [ -n "$IMPORT_TO" ]; then args+=(--to "$IMPORT_TO"); fi
+          pnpm data:import "${args[@]}"

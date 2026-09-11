@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS orphan_rankings(world text NOT NULL,captured_at timestamptz NOT NULL,dataset text NOT NULL,id integer NOT NULL,rank integer NOT NULL,value bigint NOT NULL,PRIMARY KEY(world,captured_at,dataset,id));

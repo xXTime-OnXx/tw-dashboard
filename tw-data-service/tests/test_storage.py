@@ -114,3 +114,13 @@ def test_world_config_uses_separate_latest_manifest():
 
     assert "state/de259/world-config/latest.json" in client.objects
     assert "state/de259/snapshots/latest.json" not in client.objects
+
+
+def test_successful_conquest_check_records_query_interval():
+    client = FakeS3Client()
+    storage = storage_with(client)
+    storage.write_conquest_check("de259", 1_788_787_000, 1_788_787_294, 0)
+    checks = [json.loads(body) for key, body in client.objects.items()
+              if "/conquest-checks/" in key]
+    assert checks == [{"world": "de259", "queried_from": 1_788_787_000,
+                       "queried_until": 1_788_787_294, "event_count": 0}]

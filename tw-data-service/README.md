@@ -133,3 +133,15 @@ pytest
 The tests cover conquest parsing and deduplication, snapshot compression and
 endpoint grouping, cursor persistence, R2 key construction, and separation of
 hourly and configuration manifests.
+
+## Dashboard integration
+
+The TypeScript workspace in `../tw-dashboard-webapp` provides the query
+database, importer and dashboard. It reads this archive without changing
+existing keys.
+Successful conquest runs also persist query-coverage records under
+`state/<world>/conquest-checks/date=YYYY-MM-DD/<until>.json` after events are
+stored and before the cursor advances. Records contain `world`, `queried_from`,
+`queried_until` (Unix seconds), and `event_count`. These allow the dashboard to
+distinguish a covered quiet interval from missing collection history. Legacy
+archives without these records remain usable but cannot prove quiet intervals.
